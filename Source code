@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Medicine {
+    char name[50];
+    int quantity;
+    float price;
+};
+
+void displayMedicine(struct Medicine med) {
+    printf("Name: %s\nQuantity: %d\nPrice: %.2f\n", med.name, med.quantity, med.price);
+}
+
+void addMedicine(struct Medicine *medicines, int *count) {
+    printf("Enter medicine name: ");
+    scanf("%s", medicines[*count].name);
+    printf("Enter quantity: ");
+    scanf("%d", &medicines[*count].quantity);
+    printf("Enter price: ");
+    scanf("%f", &medicines[*count].price);
+    (*count)++;
+}
+
+void displayInventory(struct Medicine *medicines, int count) {
+    if (count == 0) {
+        printf("Inventory is empty.\n");
+        return;
+    }
+
+    printf("Medicine Inventory:\n");
+    for (int i = 0; i < count; ++i) {
+        printf("Medicine %d:\n", i + 1);
+        displayMedicine(medicines[i]);
+        printf("----------------------\n");
+    }
+}
+
+int main() {
+    struct Medicine medicines[100];
+    int count = 0;
+    int choice;
+
+    do {
+        printf("\nPharmacy Management System\n");
+        printf("1. Add Medicine\n");
+        printf("2. Display Inventory\n");
+        printf("0. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addMedicine(medicines, &count);
+                break;
+            case 2:
+                displayInventory(medicines, count);
+                break;
+            case 0:
+                printf("Exiting program. Goodbye!\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 0);
+
+    return 0;
+}
